@@ -7,7 +7,7 @@ import com.jia.jason.materialdesighpractice.R;
 public class MainActivity extends BaseActivity {
 
     private TextView tvRecyclerView;
-    private TextView FingerPath;
+    private TextView tvCardView;
     private TextView lunarLander;
     private TextView gBall;
     private TextView ListViewContainer;
@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         tvRecyclerView = (TextView) findViewById(R.id.recycler_view_test);
-        FingerPath = (TextView) findViewById(R.id.finger_path);
+        tvCardView = (TextView) findViewById(R.id.card_view_test);
         lunarLander = (TextView) findViewById(R.id.lunar_lander);
         gBall = (TextView) findViewById(R.id.g_ball);
         ListViewContainer = (TextView) findViewById(R.id.list_view_container);
@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
         listAddSet = (TextView) findViewById(R.id.list_add_set);
 
         tvRecyclerView.setOnClickListener(this);
-        FingerPath.setOnClickListener(this);
+        tvCardView.setOnClickListener(this);
         lunarLander.setOnClickListener(this);
         gBall.setOnClickListener(this);
         ListViewContainer.setOnClickListener(this);
@@ -52,8 +52,8 @@ public class MainActivity extends BaseActivity {
             case R.id.recycler_view_test:
                 jStartActivity(RecyclerViewActivity.class);
                 break;
-            case R.id.finger_path:
-                //jStartActivity(FingerPathActivity.class);
+            case R.id.card_view_test:
+                jStartActivity(CardViewActivity.class);
                 break;
             case R.id.lunar_lander:
                 //jStartActivity(LunarLanderActivity.class);

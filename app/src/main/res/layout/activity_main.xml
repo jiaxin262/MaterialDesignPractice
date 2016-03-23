@@ -22,11 +22,11 @@
             android:background="@drawable/atom_flight_button_light_gray_bg_selector"
             android:gravity="center"/>
         <TextView
-            android:id="@+id/finger_path"
+            android:id="@+id/card_view_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="FingerPath"
+            android:text="CardView"
             android:padding="10dp"
             android:background="@drawable/atom_flight_button_light_gray_bg_selector"
             android:gravity="center"/>
