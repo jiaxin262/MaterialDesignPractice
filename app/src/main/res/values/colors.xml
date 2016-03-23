@@ -3,4 +3,23 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="red">#ff0000</color>
+    <color name="yellow">#ffff00</color>
+    <color name="grey">#ededed</color>
+    <color name="purple">#5d478b</color>
+    <color name="cyan">#00ffff</color>
+    <color name="pink">#ffc0cb</color>
+    <color name="orange">#ffa500</color>
+    <color name="blue">#00afc5</color>
+    <color name="grey_heavy">#a7aba6</color>
+
+    <color name="setting_line">#C0C0C0</color>
+    <color name="description_bgcolor">#d4d4d4</color>
+    <color name="game_blank">#ffa500</color>
+    <color name="game_sameLine">#e6e6fa</color>
+    <color name="result_dialog_bg">#71ededed</color>
+    <color name="night_modle">#3b3b3b</color>
+    <color name="night_modle2">#454545</color>
 </resources>

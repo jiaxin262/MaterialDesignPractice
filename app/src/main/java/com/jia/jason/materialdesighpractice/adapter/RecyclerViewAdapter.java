@@ -3,10 +3,15 @@ package com.jia.jason.materialdesighpractice.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jia.jason.materialdesighpractice.R;
+import com.jia.jason.materialdesighpractice.model.JListItem;
+
+import java.util.List;
 
 /**
  * Created by xin.jia
@@ -14,22 +19,24 @@ import com.jia.jason.materialdesighpractice.R;
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    private String[] dataSet;
+    private List<JListItem> itemList;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public LinearLayout llItemView;
+        public ImageView mCube;
         public TextView mTextView;
+        public CheckBox mCheckBox;
 
         public MyViewHolder(LinearLayout itemView) {
             super(itemView);
-            this.llItemView = itemView;
             mTextView = (TextView) itemView.findViewById(R.id.item_view_tv);
+            mCube = (ImageView) itemView.findViewById(R.id.cube);
+            mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox);
         }
     }
 
-    public RecyclerViewAdapter(String[] dataSet) {
-        this.dataSet = dataSet;
+    public RecyclerViewAdapter(List<JListItem> itemList) {
+        this.itemList = itemList;
     }
 
 
@@ -41,11 +48,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.mTextView.setText(dataSet[position]);
+        final JListItem item = itemList.get(position);
+        holder.mTextView.setText(item.text);
+        holder.mCube.setBackgroundColor(item.color);
+        holder.mCheckBox.setChecked(item.isChecked);
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.length;
+        return itemList.size();
     }
 }

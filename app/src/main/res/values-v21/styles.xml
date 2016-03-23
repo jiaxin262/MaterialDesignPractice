@@ -1,10 +1,17 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Material">
+    <style name="AppTheme" parent="android:Theme.Material.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:textViewStyle">@style/jStyle_BlackNormalText</item>
+    </style>
+
+    <style parent="android:Widget"  name="jStyle_BlackNormalText">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">#333333</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

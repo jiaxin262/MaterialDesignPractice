@@ -1,35 +1,85 @@
 package com.jia.jason.materialdesighpractice.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
+import android.view.View;
+import android.widget.TextView;
 import com.jia.jason.materialdesighpractice.R;
-import com.jia.jason.materialdesighpractice.adapter.RecyclerViewAdapter;
+public class MainActivity extends BaseActivity {
 
-public class MainActivity extends Activity {
+    private TextView tvRecyclerView;
+    private TextView FingerPath;
+    private TextView lunarLander;
+    private TextView gBall;
+    private TextView ListViewContainer;
+    private TextView ListViewTest;
+    private TextView jLunarLander;
+    private TextView ListViewAndOther;
+    private TextView gravitySensor;
+    private TextView listAddSet;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
-    private String[] dataSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        tvRecyclerView = (TextView) findViewById(R.id.recycler_view_test);
+        FingerPath = (TextView) findViewById(R.id.finger_path);
+        lunarLander = (TextView) findViewById(R.id.lunar_lander);
+        gBall = (TextView) findViewById(R.id.g_ball);
+        ListViewContainer = (TextView) findViewById(R.id.list_view_container);
+        ListViewTest = (TextView) findViewById(R.id.list_view_test);
+        jLunarLander = (TextView) findViewById(R.id.j_lunar_lander);
+        ListViewAndOther = (TextView) findViewById(R.id.list_view_and_other);
+        gravitySensor = (TextView) findViewById(R.id.gravity_sensor);
+        listAddSet = (TextView) findViewById(R.id.list_add_set);
 
-        mRecyclerView.setHasFixedSize(true);
+        tvRecyclerView.setOnClickListener(this);
+        FingerPath.setOnClickListener(this);
+        lunarLander.setOnClickListener(this);
+        gBall.setOnClickListener(this);
+        ListViewContainer.setOnClickListener(this);
+        ListViewTest.setOnClickListener(this);
+        jLunarLander.setOnClickListener(this);
+        ListViewAndOther.setOnClickListener(this);
+        gravitySensor.setOnClickListener(this);
+        listAddSet.setOnClickListener(this);
+    }
 
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        dataSet = new String[]{"1", "2", "3","1", "2", "3","1", "2", "3"};
-        mAdapter = new RecyclerViewAdapter(dataSet);
-        mRecyclerView.setAdapter(mAdapter);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.recycler_view_test:
+                jStartActivity(RecyclerViewActivity.class);
+                break;
+            case R.id.finger_path:
+                //jStartActivity(FingerPathActivity.class);
+                break;
+            case R.id.lunar_lander:
+                //jStartActivity(LunarLanderActivity.class);
+                break;
+            case R.id.g_ball:
+                //jStartActivity(GBallActivity.class);
+                break;
+            case R.id.list_view_container:
+                //jStartActivity(ListViewsActivity.class);
+                break;
+            case R.id.list_view_test:
+                //jStartActivity(ListViewTestActivity.class);
+                break;
+            case R.id.j_lunar_lander:
+                //jStartActivity(JLunarLanderActivity.class);
+                break;
+            case R.id.list_view_and_other:
+                //jStartActivity(ListViewAndOtherActivity.class);
+                break;
+            case R.id.gravity_sensor:
+                //jStartActivity(GravitySensorActivity.class);
+                break;
+            case R.id.list_add_set:
+                //jStartActivity(ListAddSetActivity.class);
+                break;
+        }
     }
 
 }
