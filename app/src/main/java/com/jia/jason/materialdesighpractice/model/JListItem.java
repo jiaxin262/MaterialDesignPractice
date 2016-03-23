@@ -37,7 +37,7 @@ public class JListItem {
                 Color.RED, Color.BLACK, Color.BLUE, Color.CYAN, Color.DKGRAY,
                 Color.GRAY, Color.GREEN, Color.LTGRAY, Color.YELLOW, Color.TRANSPARENT
         };
-        for (int i=0; i<10; i++){
+        for (int i=0; i<30; i++){
             JListItem item = new JListItem(colors[i], "第"+i+"个view");
             items.add(item);
         }
