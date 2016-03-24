@@ -8,7 +8,7 @@ public class MainActivity extends BaseActivity {
 
     private TextView tvRecyclerView;
     private TextView tvCardView;
-    private TextView lunarLander;
+    private TextView tvGridView;
     private TextView gBall;
     private TextView ListViewContainer;
     private TextView ListViewTest;
@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
 
         tvRecyclerView = (TextView) findViewById(R.id.recycler_view_test);
         tvCardView = (TextView) findViewById(R.id.card_view_test);
-        lunarLander = (TextView) findViewById(R.id.lunar_lander);
+        tvGridView = (TextView) findViewById(R.id.grid_view_test);
         gBall = (TextView) findViewById(R.id.g_ball);
         ListViewContainer = (TextView) findViewById(R.id.list_view_container);
         ListViewTest = (TextView) findViewById(R.id.list_view_test);
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
 
         tvRecyclerView.setOnClickListener(this);
         tvCardView.setOnClickListener(this);
-        lunarLander.setOnClickListener(this);
+        tvGridView.setOnClickListener(this);
         gBall.setOnClickListener(this);
         ListViewContainer.setOnClickListener(this);
         ListViewTest.setOnClickListener(this);
@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
             case R.id.card_view_test:
                 jStartActivity(CardViewActivity.class);
                 break;
-            case R.id.lunar_lander:
-                //jStartActivity(LunarLanderActivity.class);
+            case R.id.grid_view_test:
+                jStartActivity(GridViewActivity.class);
                 break;
             case R.id.g_ball:
                 //jStartActivity(GBallActivity.class);
