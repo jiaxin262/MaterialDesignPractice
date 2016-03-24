@@ -8,6 +8,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.jia.jason.materialdesighpractice.R;
+import com.jia.jason.materialdesighpractice.model.ImageModel;
+
+import java.util.List;
 
 /**
  * Created by xin.jia
@@ -16,19 +19,21 @@ import com.jia.jason.materialdesighpractice.R;
 public class ImageAdapter extends BaseAdapter {
 
     private Context context;
+    private List<ImageModel> imageModels;
 
-    public ImageAdapter(Context context) {
+    public ImageAdapter(Context context, List<ImageModel> imageModels) {
         this.context = context;
+        this.imageModels = imageModels;
     }
 
     @Override
     public int getCount() {
-        return mThumbIds.length;
+        return imageModels.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mThumbIds[position];
+        return imageModels.get(position);
     }
 
     @Override
@@ -39,25 +44,17 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+        ImageModel imageModel = imageModels.get(position);
         if (convertView == null) {
             imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
+            imageView.setLayoutParams(new GridView.LayoutParams(-2, -2));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;
         }
-        imageView.setImageResource(mThumbIds[position]);
+        imageView.setBackgroundColor(imageModel.getImageColor());
+        imageView.setImageResource(imageModel.getImageId());
         return imageView;
     }
 
-    private Integer[] mThumbIds = {
-            R.drawable.sample_0, R.drawable.sample_1, R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1, R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1, R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1, R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7,
-    };
 }

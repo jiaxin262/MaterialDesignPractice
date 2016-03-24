@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.jia.jason.materialdesighpractice.R;
 import com.jia.jason.materialdesighpractice.adapter.ImageAdapter;
+import com.jia.jason.materialdesighpractice.model.ImageModel;
 
 /**
  * Created by xin.jia
@@ -22,7 +23,8 @@ public class GridViewActivity extends BaseActivity {
         setContentView(R.layout.grid_view_layout);
 
         GridView gridView = (GridView) findViewById(R.id.grid_view_gv);
-        gridView.setAdapter(new ImageAdapter(this));
+        gridView.setAdapter(new ImageAdapter(this, ImageModel.mock()));
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
