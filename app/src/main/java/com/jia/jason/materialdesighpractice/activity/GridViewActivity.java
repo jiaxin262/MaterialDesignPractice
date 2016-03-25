@@ -39,10 +39,10 @@ public class GridViewActivity extends BaseActivity {
 
     private void setViewPagerandZoom() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.image_detail_view);
-        viewPager.setVisibility(View.VISIBLE);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, ImageModel.mock());
         viewPager.setAdapter(viewPagerAdapter);
 
+        viewPager.setVisibility(View.VISIBLE);
         View container = findViewById(R.id.grid_view_pager_container);
         viewPager.setOnClickListener(new View.OnClickListener() {
             @Override

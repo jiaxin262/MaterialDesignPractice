@@ -49,6 +49,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
             }
         });
+        container.addView(imageView);
         return imageView;
     }
 

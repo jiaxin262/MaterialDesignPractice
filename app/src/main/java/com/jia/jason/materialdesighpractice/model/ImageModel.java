@@ -1,11 +1,13 @@
 package com.jia.jason.materialdesighpractice.model;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.jia.jason.materialdesighpractice.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -54,6 +56,7 @@ public class ImageModel {
         List<ImageModel> imageModels = new ArrayList<>();
         for (int i = 0; i < 32; i++) {
             int random = new Random().nextInt(8);
+            Log.e("random:", random+"");
             ImageModel imageModel = new ImageModel(imageIds[random], imageColors[random]);
             imageModels.add(imageModel);
         }
