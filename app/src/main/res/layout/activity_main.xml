@@ -40,11 +40,11 @@
             android:background="@drawable/atom_flight_button_light_gray_bg_selector"
             android:gravity="center"/>
         <TextView
-            android:id="@+id/g_ball"
+            android:id="@+id/view_pager_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="GBall"
+            android:text="ViewPager"
             android:padding="10dp"
             android:background="@drawable/atom_flight_button_light_gray_bg_selector"
             android:gravity="center"/>

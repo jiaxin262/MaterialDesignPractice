@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.jia.jason.materialdesighpractice.R;
 import com.jia.jason.materialdesighpractice.adapter.ImageAdapter;
+import com.jia.jason.materialdesighpractice.adapter.ViewPagerAdapter;
 import com.jia.jason.materialdesighpractice.model.ImageModel;
 
 /**
@@ -17,13 +18,14 @@ import com.jia.jason.materialdesighpractice.model.ImageModel;
  */
 public class GridViewActivity extends BaseActivity {
 
+    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_view_layout);
 
-        GridView gridView = (GridView) findViewById(R.id.grid_view_gv);
+        gridView = (GridView) findViewById(R.id.grid_view_gv);
         gridView.setAdapter(new ImageAdapter(this, ImageModel.mock()));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -37,8 +39,11 @@ public class GridViewActivity extends BaseActivity {
 
     private void setViewPagerandZoom() {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.image_detail_view);
-        View container = findViewById(R.id.grid_view_pager_container);
         viewPager.setVisibility(View.VISIBLE);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, ImageModel.mock());
+        viewPager.setAdapter(viewPagerAdapter);
+
+        View container = findViewById(R.id.grid_view_pager_container);
         viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
