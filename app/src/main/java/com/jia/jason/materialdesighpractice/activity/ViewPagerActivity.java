@@ -19,7 +19,7 @@ public class ViewPagerActivity extends BaseActivity {
         setContentView(R.layout.view_pager_layout);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_view);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this, ImageModel.mock());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this, ImageModel.mock(), viewPager);
         viewPager.setAdapter(adapter);
     }
 }

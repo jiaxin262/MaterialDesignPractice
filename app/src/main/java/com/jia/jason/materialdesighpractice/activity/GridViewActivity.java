@@ -12,6 +12,8 @@ import com.jia.jason.materialdesighpractice.adapter.ImageAdapter;
 import com.jia.jason.materialdesighpractice.adapter.ViewPagerAdapter;
 import com.jia.jason.materialdesighpractice.model.ImageModel;
 
+import java.util.List;
+
 /**
  * Created by xin.jia
  * since 2016/3/24
@@ -19,36 +21,33 @@ import com.jia.jason.materialdesighpractice.model.ImageModel;
 public class GridViewActivity extends BaseActivity {
 
     GridView gridView;
+    List<ImageModel> imageModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_view_layout);
 
+        imageModels = ImageModel.mock();
         gridView = (GridView) findViewById(R.id.grid_view_gv);
-        gridView.setAdapter(new ImageAdapter(this, ImageModel.mock()));
+        gridView.setAdapter(new ImageAdapter(this, imageModels));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(GridViewActivity.this, "position:"+position, Toast.LENGTH_SHORT).show();
-                setViewPagerandZoom();
+                setViewPagerandZoom(position);
             }
         });
     }
 
-    private void setViewPagerandZoom() {
+    private void setViewPagerandZoom(int position) {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.image_detail_view);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, ImageModel.mock());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, imageModels, viewPager);
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setCurrentItem(position);
 
         viewPager.setVisibility(View.VISIBLE);
         View container = findViewById(R.id.grid_view_pager_container);
-        viewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setVisibility(View.GONE);
-            }
-        });
     }
 }

@@ -2,6 +2,7 @@ package com.jia.jason.materialdesighpractice.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -19,10 +20,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private List<ImageModel> imageModels;
+    private ViewPager viewPager;
 
-    public ViewPagerAdapter(Context context, List<ImageModel> imageModels) {
+    public ViewPagerAdapter(Context context, List<ImageModel> imageModels, ViewPager viewPager) {
         this.context = context;
         this.imageModels = imageModels;
+        this.viewPager = viewPager;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                viewPager.setVisibility(View.GONE);
             }
         });
         container.addView(imageView);
