@@ -14,9 +14,9 @@ public class ZoomUtil {
     private final int ANIMATION_DURATION = 300;
     private Animator animator;
 
-    private View containerView;
-    private ViewGroup thumbViewParent;
-    private View expandedView;
+    private View containerView; //最外层容器
+    private ViewGroup smallViewParent;  //小图片的父容器
+    private View expandedView;  //大图片所在视图
 
     private Rect startBounds;
     private float startScale;
@@ -26,4 +26,13 @@ public class ZoomUtil {
         this.containerView = containerView;
         this.expandedView = expandedView;
     }
+
+    public void zoomImageFromSmall(final View smallView) {
+        smallViewParent = (ViewGroup) smallView.getParent();
+        if (animator != null) {
+            animator.cancel();
+        }
+
+    }
+
 }

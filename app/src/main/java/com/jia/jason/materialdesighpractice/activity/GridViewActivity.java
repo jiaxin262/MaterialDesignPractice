@@ -11,6 +11,7 @@ import com.jia.jason.materialdesighpractice.R;
 import com.jia.jason.materialdesighpractice.adapter.ImageAdapter;
 import com.jia.jason.materialdesighpractice.adapter.ViewPagerAdapter;
 import com.jia.jason.materialdesighpractice.model.ImageModel;
+import com.jia.jason.materialdesighpractice.util.ZoomUtil;
 
 import java.util.List;
 
@@ -35,13 +36,12 @@ public class GridViewActivity extends BaseActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(GridViewActivity.this, "position:"+position, Toast.LENGTH_SHORT).show();
-                setViewPagerandZoom(position);
+                setViewPagerAndZoom(view, position);
             }
         });
     }
 
-    private void setViewPagerandZoom(int position) {
+    private void setViewPagerAndZoom(View view, int position) {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.image_detail_view);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, imageModels, viewPager);
         viewPager.setAdapter(viewPagerAdapter);
@@ -49,5 +49,8 @@ public class GridViewActivity extends BaseActivity {
 
         viewPager.setVisibility(View.VISIBLE);
         View container = findViewById(R.id.grid_view_pager_container);
+
+        ZoomUtil zoomUtil = new ZoomUtil(container, viewPager);
+        zoomUtil.zoomImageFromSmall(view);
     }
 }
