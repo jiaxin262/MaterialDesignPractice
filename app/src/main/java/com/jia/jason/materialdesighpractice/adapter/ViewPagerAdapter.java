@@ -9,6 +9,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.jia.jason.materialdesighpractice.model.ImageModel;
+import com.jia.jason.materialdesighpractice.util.ZoomUtil;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ public class ViewPagerAdapter extends PagerAdapter {
     private Context context;
     private List<ImageModel> imageModels;
     private ViewPager viewPager;
+    private ZoomUtil zoomUtil;
 
-    public ViewPagerAdapter(Context context, List<ImageModel> imageModels, ViewPager viewPager) {
+    public ViewPagerAdapter(Context context, List<ImageModel> imageModels, ViewPager viewPager, ZoomUtil zoomUtil) {
         this.context = context;
         this.imageModels = imageModels;
         this.viewPager = viewPager;
+        this.zoomUtil = zoomUtil;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         ImageModel imageModel = imageModels.get(position);
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(new GridView.LayoutParams(-2, -2));
@@ -49,7 +52,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewPager.setVisibility(View.GONE);
+                zoomUtil.closeZoomAnim(position);
             }
         });
         container.addView(imageView);

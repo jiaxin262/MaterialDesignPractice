@@ -2,10 +2,12 @@ package com.jia.jason.materialdesighpractice.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.jia.jason.materialdesighpractice.R;
 import com.jia.jason.materialdesighpractice.adapter.ViewPagerAdapter;
 import com.jia.jason.materialdesighpractice.model.ImageModel;
+import com.jia.jason.materialdesighpractice.util.ZoomUtil;
 
 /**
  * Created by xin.jia
@@ -18,8 +20,10 @@ public class ViewPagerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_pager_layout);
 
+        View container = findViewById(R.id.grid_view_pager_container);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_view);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this, ImageModel.mock(), viewPager);
+        ZoomUtil zoomUtil = new ZoomUtil(container, viewPager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this, ImageModel.mock(), viewPager, zoomUtil);
         viewPager.setAdapter(adapter);
     }
 }
