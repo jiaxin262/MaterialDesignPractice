@@ -1,6 +1,7 @@
 package com.jia.jason.materialdesighpractice.util;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Point;
@@ -94,6 +95,23 @@ public class ZoomUtil {
                 .with(ObjectAnimator.ofFloat(v, "scaleY", startScale, 1f));
         animatorSet.setDuration(ANIMATION_DURATION);
         animatorSet.setInterpolator(new DecelerateInterpolator());
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animator = null;
+                if (listener != null) {
+                    listener.onExpanded();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                animator = null;
+                if (listener != null) {
+                    listener.onExpanded();
+                }
+            }
+        });
         animatorSet.start();
         animator = animatorSet;
     }
@@ -116,6 +134,23 @@ public class ZoomUtil {
         }
         set.setDuration(ANIMATION_DURATION);
         set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animator = null;
+                if (listener != null) {
+                    listener.onThumbed();
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                animator = null;
+                if (listener != null) {
+                    listener.onThumbed();
+                }
+            }
+        });
         set.start();
         animator = set;
     }

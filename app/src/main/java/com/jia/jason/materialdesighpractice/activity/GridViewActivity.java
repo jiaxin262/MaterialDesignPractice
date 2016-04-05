@@ -52,6 +52,16 @@ public class GridViewActivity extends BaseActivity {
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(position);
 
+        zoomUtil.setOnZoomListener(new ZoomUtil.OnZoomListener() {
+            @Override
+            public void onExpanded() {
+            }
+
+            @Override
+            public void onThumbed() {
+                viewPager.setVisibility(View.GONE);
+            }
+        });
         zoomUtil.zoomImageFromSmall(view);
     }
 }
