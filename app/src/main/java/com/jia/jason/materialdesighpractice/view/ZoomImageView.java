@@ -5,8 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+
+import com.jia.jason.materialdesighpractice.R;
 
 public class ZoomImageView extends View {
 
@@ -134,6 +138,7 @@ public class ZoomImageView extends View {
 	public ZoomImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		currentStatus = STATUS_INIT;
+		setBackgroundColor(getResources().getColor(R.color.grey));
 	}
 
 	/**

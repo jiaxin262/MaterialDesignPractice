@@ -52,12 +52,6 @@ public class ViewPagerAdapter extends PagerAdapter {
         ZoomImageView zoomImageView = new ZoomImageView(context, null);
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), imageModel.getImageId());
         zoomImageView.setImageBitmap(bitmap);
-        zoomImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                zoomUtil.closeZoomAnim(position);
-            }
-        });
         container.addView(zoomImageView);
         return zoomImageView;
     }

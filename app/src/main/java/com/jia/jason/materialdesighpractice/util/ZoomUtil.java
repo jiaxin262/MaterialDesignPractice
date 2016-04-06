@@ -74,19 +74,9 @@ public class ZoomUtil {
 
     private void setScaleAndPos() {
         if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds.width() / startBounds.height()) {
-            // Extend start bounds horizontally
             startScale = (float) startBounds.height() / finalBounds.height();
-//            float startWidth = startScale * finalBounds.width();
-//            float deltaWidth = (startWidth - startBounds.width()) / 2;
-//            startBounds.left -= deltaWidth;
-//            startBounds.right += deltaWidth;
         } else {
-            // Extend start bounds vertically
             startScale = (float) startBounds.width() / finalBounds.width();
-//            float startHeight = startScale * finalBounds.height();
-//            float deltaHeight = (startHeight - startBounds.height()) / 2;
-//            startBounds.top -= deltaHeight;
-//            startBounds.bottom += deltaHeight;
         }
     }
 
