@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
@@ -53,6 +54,9 @@ public class ZoomUtil {
         startBounds.offset(-globalOffSet.x, -globalOffSet.y);
         finalBounds.offset(-globalOffSet.x, -globalOffSet.y);
 
+        Log.e("startBounds:", ""+startBounds);
+        Log.e("finalBounds:", ""+finalBounds);
+        Log.e("globalOffSet:", ""+globalOffSet);
         //设置缩放比例和位置
         setScaleAndPos();
 
@@ -69,21 +73,20 @@ public class ZoomUtil {
     }
 
     private void setScaleAndPos() {
-        if ((float) finalBounds.width() / finalBounds.height() > (float)
-                startBounds.width() / startBounds.height()) {
+        if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds.width() / startBounds.height()) {
             // Extend start bounds horizontally
             startScale = (float) startBounds.height() / finalBounds.height();
-            float startWidth = startScale * finalBounds.width();
-            float deltaWidth = (startWidth - startBounds.width()) / 2;
-            startBounds.left -= deltaWidth;
-            startBounds.right += deltaWidth;
+//            float startWidth = startScale * finalBounds.width();
+//            float deltaWidth = (startWidth - startBounds.width()) / 2;
+//            startBounds.left -= deltaWidth;
+//            startBounds.right += deltaWidth;
         } else {
             // Extend start bounds vertically
             startScale = (float) startBounds.width() / finalBounds.width();
-            float startHeight = startScale * finalBounds.height();
-            float deltaHeight = (startHeight - startBounds.height()) / 2;
-            startBounds.top -= deltaHeight;
-            startBounds.bottom += deltaHeight;
+//            float startHeight = startScale * finalBounds.height();
+//            float deltaHeight = (startHeight - startBounds.height()) / 2;
+//            startBounds.top -= deltaHeight;
+//            startBounds.bottom += deltaHeight;
         }
     }
 

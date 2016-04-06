@@ -16,8 +16,8 @@ import java.util.Random;
  */
 public class ImageModel {
 
-    public int imageId;
-    public int imageColor;
+    private int imageId;
+    private int imageColor;
 
     public ImageModel() {
     }
