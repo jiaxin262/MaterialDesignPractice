@@ -6,13 +6,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/blue">
         <GridView
             android:id="@+id/grid_view_gv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:numColumns="auto_fit"
             android:stretchMode="columnWidth"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
             android:gravity="center" />
 
         <android.support.v4.view.ViewPager
