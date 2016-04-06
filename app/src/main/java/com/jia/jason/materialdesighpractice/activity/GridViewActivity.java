@@ -13,6 +13,7 @@ import com.jia.jason.materialdesighpractice.adapter.ImageAdapter;
 import com.jia.jason.materialdesighpractice.adapter.ViewPagerAdapter;
 import com.jia.jason.materialdesighpractice.model.ImageModel;
 import com.jia.jason.materialdesighpractice.model.JListItem;
+import com.jia.jason.materialdesighpractice.util.JScreenUtil;
 import com.jia.jason.materialdesighpractice.util.ZoomUtil;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class GridViewActivity extends BaseActivity {
 
         imageModels = ImageModel.mock();
         gridView = (GridView) findViewById(R.id.grid_view_gv);
+        gridView.setColumnWidth(JScreenUtil.getScreenWidth()/2);
         gridView.setAdapter(new ImageAdapter(this, imageModels));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
