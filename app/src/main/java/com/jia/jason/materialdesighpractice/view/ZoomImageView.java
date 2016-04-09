@@ -4,15 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jia.jason.materialdesighpractice.R;
 
-public class ZoomImageView extends View {
+public class ZoomImageView extends View implements GestureDetector.OnGestureListener,
+		GestureDetector.OnDoubleTapListener{
 
 	/**
 	 * 初始化状态常量
@@ -129,6 +132,9 @@ public class ZoomImageView extends View {
 	 */
 	private double lastFingerDis;
 
+	GestureDetectorCompat jDetector;
+	private static final String DEBUG_TAG = "JGESTURE";
+
 	/**
 	 * ZoomImageView构造函数，将当前操作状态设为STATUS_INIT。
 	 * 
@@ -139,6 +145,8 @@ public class ZoomImageView extends View {
 		super(context, attrs);
 		currentStatus = STATUS_INIT;
 		setBackgroundColor(getResources().getColor(R.color.grey));
+		jDetector = new GestureDetectorCompat(context, this);
+		jDetector.setOnDoubleTapListener(this);
 	}
 
 	/**
@@ -164,6 +172,7 @@ public class ZoomImageView extends View {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		this.jDetector.onTouchEvent(event);
 		switch (event.getActionMasked()) {
 		case MotionEvent.ACTION_POINTER_DOWN:
 			if (event.getPointerCount() == 2) {
@@ -172,33 +181,34 @@ public class ZoomImageView extends View {
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
-			if (event.getPointerCount() == 1) {
-				// 只有单指按在屏幕上移动时，为拖动状态
-				float xMove = event.getX();
-				float yMove = event.getY();
-				if (lastXMove == -1 && lastYMove == -1) {
-					lastXMove = xMove;
-					lastYMove = yMove;
-				}
-				currentStatus = STATUS_MOVE;
-				movedDistanceX = xMove - lastXMove;
-				movedDistanceY = yMove - lastYMove;
-				// 进行边界检查，不允许将图片拖出边界
-				if (totalTranslateX + movedDistanceX > 0) {
-					movedDistanceX = 0;
-				} else if (width - (totalTranslateX + movedDistanceX) > currentBitmapWidth) {
-					movedDistanceX = 0;
-				}
-				if (totalTranslateY + movedDistanceY > 0) {
-					movedDistanceY = 0;
-				} else if (height - (totalTranslateY + movedDistanceY) > currentBitmapHeight) {
-					movedDistanceY = 0;
-				}
-				// 调用onDraw()方法绘制图片
-				invalidate();
-				lastXMove = xMove;
-				lastYMove = yMove;
-			} else if (event.getPointerCount() == 2) {
+//			if (event.getPointerCount() == 1) {
+//				// 只有单指按在屏幕上移动时，为拖动状态
+//				float xMove = event.getX();
+//				float yMove = event.getY();
+//				if (lastXMove == -1 && lastYMove == -1) {
+//					lastXMove = xMove;
+//					lastYMove = yMove;
+//				}
+//				currentStatus = STATUS_MOVE;
+//				movedDistanceX = xMove - lastXMove;
+//				movedDistanceY = yMove - lastYMove;
+//				// 进行边界检查，不允许将图片拖出边界
+//				if (totalTranslateX + movedDistanceX > 0) {
+//					movedDistanceX = 0;
+//				} else if (width - (totalTranslateX + movedDistanceX) > currentBitmapWidth) {
+//					movedDistanceX = 0;
+//				}
+//				if (totalTranslateY + movedDistanceY > 0) {
+//					movedDistanceY = 0;
+//				} else if (height - (totalTranslateY + movedDistanceY) > currentBitmapHeight) {
+//					movedDistanceY = 0;
+//				}
+//				// 调用onDraw()方法绘制图片
+//				invalidate();
+//				lastXMove = xMove;
+//				lastYMove = yMove;
+//			} else
+			if (event.getPointerCount() == 2) {
 				// 有两个手指按在屏幕上移动时，为缩放状态
 				centerPointBetweenFingers(event);
 				double fingerDis = distanceBetweenFingers(event);
@@ -238,6 +248,82 @@ public class ZoomImageView extends View {
 		default:
 			break;
 		}
+		return true;
+	}
+
+	/**onDoubleTapListener methods*/
+	@Override
+	public boolean onSingleTapConfirmed(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onSingleTapConfirmed: " + e.toString());
+		return true;
+	}
+
+	@Override
+	public boolean onDoubleTap(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onDoubleTap: " + e.toString());
+		return true;
+	}
+
+	@Override
+	public boolean onDoubleTapEvent(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onDoubleTapEvent: " + e.toString());
+		return true;
+	}
+
+	/**onGestureListener methods*/
+	@Override
+	public boolean onDown(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onDown: " + e.getPointerCount());
+		if (e.getPointerCount() == 2) {
+			Log.e(DEBUG_TAG, "两个手指头onDown: " + e.toString());
+			// 当有两个手指按在屏幕上时，计算两指之间的距离
+			lastFingerDis = distanceBetweenFingers(e);
+		}
+		return true;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onShowPress: " + e.toString());
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		Log.e(DEBUG_TAG, "onScroll: " + e1.toString());
+		if (e1.getPointerCount() == 1) {    // 只有单指按在屏幕上移动时，为拖动状态
+			currentStatus = STATUS_MOVE;
+			movedDistanceX = distanceX;
+			movedDistanceY = distanceY;
+			if (totalTranslateX + movedDistanceX > 0) {
+				movedDistanceX = 0;
+			} else if (width - (totalTranslateX + movedDistanceX) > currentBitmapWidth) {
+				movedDistanceX = 0;
+			}
+			if (totalTranslateY + movedDistanceY > 0) {
+				movedDistanceY = 0;
+			} else if (height - (totalTranslateY + movedDistanceY) > currentBitmapHeight) {
+				movedDistanceY = 0;
+			}
+			invalidate();
+		}
+		return true;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onLongPress: " + e.toString());
+	}
+
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		Log.e(DEBUG_TAG, "onFling: " + e1.toString() + "###" + e2.toString());
+		return true;
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		Log.e(DEBUG_TAG, "onSingleTapUp: " + e.toString());
 		return true;
 	}
 
@@ -317,14 +403,12 @@ public class ZoomImageView extends View {
 	private void move(Canvas canvas) {
 		matrix.reset();
 		// 根据手指移动的距离计算出总偏移值
-		float translateX = totalTranslateX + movedDistanceX;
-		float translateY = totalTranslateY + movedDistanceY;
+		totalTranslateX -= movedDistanceX;
+		totalTranslateY -= movedDistanceY;
 		// 先按照已有的缩放比例对图片进行缩放
 		matrix.postScale(totalRatio, totalRatio);
 		// 再根据移动距离进行偏移
-		matrix.postTranslate(translateX, translateY);
-		totalTranslateX = translateX;
-		totalTranslateY = translateY;
+		matrix.postTranslate(totalTranslateX, totalTranslateY);
 		canvas.drawBitmap(sourceBitmap, matrix, null);
 	}
 
