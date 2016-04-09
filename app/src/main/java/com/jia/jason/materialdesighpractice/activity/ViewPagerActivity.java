@@ -23,7 +23,7 @@ public class ViewPagerActivity extends BaseActivity {
         View container = findViewById(R.id.grid_view_pager_container);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_view);
         ZoomUtil zoomUtil = new ZoomUtil(container, viewPager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(this, ImageModel.mock(), viewPager, zoomUtil);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this, ImageModel.mock(), zoomUtil);
         viewPager.setAdapter(adapter);
     }
 }

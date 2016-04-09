@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jia.jason.materialdesighpractice.R;
+import com.jia.jason.materialdesighpractice.util.ZoomUtil;
 
 public class ZoomImageView extends View implements GestureDetector.OnGestureListener,
 		GestureDetector.OnDoubleTapListener{
@@ -83,16 +84,6 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 	private float currentBitmapHeight;
 
 	/**
-	 * 记录上次手指移动时的横坐标
-	 */
-	private float lastXMove = -1;
-
-	/**
-	 * 记录上次手指移动时的纵坐标
-	 */
-	private float lastYMove = -1;
-
-	/**
 	 * 记录手指在横坐标方向上的移动距离
 	 */
 	private float movedDistanceX;
@@ -134,6 +125,8 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 
 	GestureDetectorCompat jDetector;
 	private static final String DEBUG_TAG = "JGESTURE";
+	private ZoomUtil zoomUtil;
+	private int posInViewPager;
 
 	/**
 	 * ZoomImageView构造函数，将当前操作状态设为STATUS_INIT。
@@ -160,6 +153,11 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 		invalidate();
 	}
 
+	public void setZoomUtil(ZoomUtil zoomUtil, int position) {
+		this.zoomUtil = zoomUtil;
+		posInViewPager = position;
+	}
+
 	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
@@ -181,33 +179,6 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
-//			if (event.getPointerCount() == 1) {
-//				// 只有单指按在屏幕上移动时，为拖动状态
-//				float xMove = event.getX();
-//				float yMove = event.getY();
-//				if (lastXMove == -1 && lastYMove == -1) {
-//					lastXMove = xMove;
-//					lastYMove = yMove;
-//				}
-//				currentStatus = STATUS_MOVE;
-//				movedDistanceX = xMove - lastXMove;
-//				movedDistanceY = yMove - lastYMove;
-//				// 进行边界检查，不允许将图片拖出边界
-//				if (totalTranslateX + movedDistanceX > 0) {
-//					movedDistanceX = 0;
-//				} else if (width - (totalTranslateX + movedDistanceX) > currentBitmapWidth) {
-//					movedDistanceX = 0;
-//				}
-//				if (totalTranslateY + movedDistanceY > 0) {
-//					movedDistanceY = 0;
-//				} else if (height - (totalTranslateY + movedDistanceY) > currentBitmapHeight) {
-//					movedDistanceY = 0;
-//				}
-//				// 调用onDraw()方法绘制图片
-//				invalidate();
-//				lastXMove = xMove;
-//				lastYMove = yMove;
-//			} else
 			if (event.getPointerCount() == 2) {
 				// 有两个手指按在屏幕上移动时，为缩放状态
 				centerPointBetweenFingers(event);
@@ -233,18 +204,6 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 				}
 			}
 			break;
-		case MotionEvent.ACTION_POINTER_UP:
-			if (event.getPointerCount() == 2) {
-				// 手指离开屏幕时将临时值还原
-				lastXMove = -1;
-				lastYMove = -1;
-			}
-			break;
-		case MotionEvent.ACTION_UP:
-			// 手指离开屏幕时将临时值还原
-			lastXMove = -1;
-			lastYMove = -1;
-			break;
 		default:
 			break;
 		}
@@ -255,12 +214,20 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {
 		Log.e(DEBUG_TAG, "onSingleTapConfirmed: " + e.toString());
+		zoomUtil.closeZoomAnim(posInViewPager);
 		return true;
 	}
 
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
 		Log.e(DEBUG_TAG, "onDoubleTap: " + e.toString());
+		totalRatio = totalRatio == 0 ? 1 : totalRatio;
+		scaledRatio = 2f;
+		totalRatio = totalRatio * scaledRatio;
+		if (totalRatio > 4 * initRatio) {
+			totalRatio = 4 * initRatio;
+		}
+		invalidate();
 		return true;
 	}
 

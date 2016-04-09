@@ -25,13 +25,11 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private List<ImageModel> imageModels;
-    private ViewPager viewPager;
     private ZoomUtil zoomUtil;
 
-    public ViewPagerAdapter(Context context, List<ImageModel> imageModels, ViewPager viewPager, ZoomUtil zoomUtil) {
+    public ViewPagerAdapter(Context context, List<ImageModel> imageModels, ZoomUtil zoomUtil) {
         this.context = context;
         this.imageModels = imageModels;
-        this.viewPager = viewPager;
         this.zoomUtil = zoomUtil;
     }
 
@@ -52,6 +50,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         ZoomImageView zoomImageView = new ZoomImageView(context, null);
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), imageModel.getImageId());
         zoomImageView.setImageBitmap(bitmap);
+        zoomImageView.setZoomUtil(zoomUtil, position);
         container.addView(zoomImageView);
         return zoomImageView;
     }

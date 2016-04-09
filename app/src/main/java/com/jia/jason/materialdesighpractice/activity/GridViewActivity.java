@@ -51,7 +51,7 @@ public class GridViewActivity extends BaseActivity {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.image_detail_view);
         ZoomUtil zoomUtil = new ZoomUtil(container, viewPager);
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, imageModels, viewPager, zoomUtil);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, imageModels, zoomUtil);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(position);
 
