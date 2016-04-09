@@ -8,9 +8,9 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.jia.jason.materialdesighpractice.R;
 import com.jia.jason.materialdesighpractice.util.ZoomUtil;
@@ -213,14 +213,15 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 	/**onDoubleTapListener methods*/
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onSingleTapConfirmed: " + e.toString());
+		//Log.e(DEBUG_TAG, "onSingleTapConfirmed: " + e.toString());
 		zoomUtil.closeZoomAnim(posInViewPager);
 		return true;
 	}
 
 	@Override
 	public boolean onDoubleTap(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onDoubleTap: " + e.toString());
+		//Log.e(DEBUG_TAG, "onDoubleTap: " + e.toString());
+		currentStatus = STATUS_ZOOM_OUT;
 		totalRatio = totalRatio == 0 ? 1 : totalRatio;
 		scaledRatio = 2f;
 		totalRatio = totalRatio * scaledRatio;
@@ -233,30 +234,25 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 
 	@Override
 	public boolean onDoubleTapEvent(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onDoubleTapEvent: " + e.toString());
+		//Log.e(DEBUG_TAG, "onDoubleTapEvent: " + e.toString());
 		return true;
 	}
 
 	/**onGestureListener methods*/
 	@Override
 	public boolean onDown(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onDown: " + e.getPointerCount());
-		if (e.getPointerCount() == 2) {
-			Log.e(DEBUG_TAG, "两个手指头onDown: " + e.toString());
-			// 当有两个手指按在屏幕上时，计算两指之间的距离
-			lastFingerDis = distanceBetweenFingers(e);
-		}
+		//Log.e(DEBUG_TAG, "onDown: " + e.getPointerCount());
 		return true;
 	}
 
 	@Override
 	public void onShowPress(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onShowPress: " + e.toString());
+		//Log.e(DEBUG_TAG, "onShowPress: " + e.toString());
 	}
 
 	@Override
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-		Log.e(DEBUG_TAG, "onScroll: " + e1.toString());
+		//Log.e(DEBUG_TAG, "onScroll: " + e1.toString());
 		if (e1.getPointerCount() == 1) {    // 只有单指按在屏幕上移动时，为拖动状态
 			currentStatus = STATUS_MOVE;
 			movedDistanceX = distanceX;
@@ -278,19 +274,19 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 
 	@Override
 	public void onLongPress(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onLongPress: " + e.toString());
+		//Log.e(DEBUG_TAG, "onLongPress: " + e.toString());
 	}
 
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		Log.e(DEBUG_TAG, "onFling: " + e1.toString() + "###" + e2.toString());
+		//Log.e(DEBUG_TAG, "onFling: " + e1.toString() + "###" + e2.toString());
 		return true;
 	}
 
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
-		Log.e(DEBUG_TAG, "onSingleTapUp: " + e.toString());
+		//Log.e(DEBUG_TAG, "onSingleTapUp: " + e.toString());
 		return true;
 	}
 
@@ -389,39 +385,27 @@ public class ZoomImageView extends View implements GestureDetector.OnGestureList
 			matrix.reset();
 			int bitmapWidth = sourceBitmap.getWidth();
 			int bitmapHeight = sourceBitmap.getHeight();
-			if (bitmapWidth > width || bitmapHeight > height) {
-				if (bitmapWidth - width > bitmapHeight - height) {
-					// 当图片宽度大于屏幕宽度时，将图片等比例压缩，使它可以完全显示出来
-					float ratio = width / (bitmapWidth * 1.0f);
-					matrix.postScale(ratio, ratio);
-					float translateY = (height - (bitmapHeight * ratio)) / 2f;
-					// 在纵坐标方向上进行偏移，以保证图片居中显示
-					matrix.postTranslate(0, translateY);
-					totalTranslateY = translateY;
-					totalRatio = initRatio = ratio;
-				} else {
-					// 当图片高度大于屏幕高度时，将图片等比例压缩，使它可以完全显示出来
-					float ratio = height / (bitmapHeight * 1.0f);
-					matrix.postScale(ratio, ratio);
-					float translateX = (width - (bitmapWidth * ratio)) / 2f;
-					// 在横坐标方向上进行偏移，以保证图片居中显示
-					matrix.postTranslate(translateX, 0);
-					totalTranslateX = translateX;
-					totalRatio = initRatio = ratio;
-				}
-				currentBitmapWidth = bitmapWidth * initRatio;
-				currentBitmapHeight = bitmapHeight * initRatio;
-			} else {
-				// 当图片的宽高都小于屏幕宽高时，直接让图片居中显示
-				float translateX = (width - sourceBitmap.getWidth()) / 2f;
-				float translateY = (height - sourceBitmap.getHeight()) / 2f;
-				matrix.postTranslate(translateX, translateY);
-				totalTranslateX = translateX;
+			if (bitmapWidth - width > bitmapHeight - height) {
+				// 当图片宽度大于屏幕宽度时，将图片等比例压缩，使它可以完全显示出来
+				float ratio = width / (bitmapWidth * 1.0f);
+				matrix.postScale(ratio, ratio);
+				float translateY = (height - (bitmapHeight * ratio)) / 2f;
+				// 在纵坐标方向上进行偏移，以保证图片居中显示
+				matrix.postTranslate(0, translateY);
 				totalTranslateY = translateY;
-				totalRatio = initRatio = 1f;
-				currentBitmapWidth = bitmapWidth;
-				currentBitmapHeight = bitmapHeight;
+				totalRatio = initRatio = ratio;
+			} else {
+				// 当图片高度大于屏幕高度时，将图片等比例压缩，使它可以完全显示出来
+				float ratio = height / (bitmapHeight * 1.0f);
+				matrix.postScale(ratio, ratio);
+				float translateX = (width - (bitmapWidth * ratio)) / 2f;
+				// 在横坐标方向上进行偏移，以保证图片居中显示
+				matrix.postTranslate(translateX, 0);
+				totalTranslateX = translateX;
+				totalRatio = initRatio = ratio;
 			}
+			currentBitmapWidth = bitmapWidth * initRatio;
+			currentBitmapHeight = bitmapHeight * initRatio;
 			canvas.drawBitmap(sourceBitmap, matrix, null);
 		}
 	}

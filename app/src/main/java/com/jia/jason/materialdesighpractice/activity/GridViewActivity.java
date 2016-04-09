@@ -3,6 +3,7 @@ package com.jia.jason.materialdesighpractice.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -27,6 +28,8 @@ public class GridViewActivity extends BaseActivity {
 
     GridView gridView;
     List<ImageModel> imageModels;
+    ZoomUtil zoomUtil;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +51,8 @@ public class GridViewActivity extends BaseActivity {
 
     private void setViewPagerAndZoom(View view, int position) {
         View container = findViewById(R.id.grid_view_pager_container);
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.image_detail_view);
-        ZoomUtil zoomUtil = new ZoomUtil(container, viewPager);
+        viewPager = (ViewPager) findViewById(R.id.image_detail_view);
+        zoomUtil = new ZoomUtil(container, viewPager);
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, imageModels, zoomUtil);
         viewPager.setAdapter(viewPagerAdapter);
@@ -66,5 +69,16 @@ public class GridViewActivity extends BaseActivity {
             }
         });
         zoomUtil.zoomImageFromSmall(view);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (viewPager != null && viewPager.getVisibility() == View.VISIBLE) {
+                zoomUtil.closeZoomAnim(viewPager.getCurrentItem());
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
